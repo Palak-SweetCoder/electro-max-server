@@ -64,6 +64,14 @@ async function run() {
             const result = await itemsCollection.deleteOne(query);
             res.send(result);
         });
+
+        // API TO: Post new user from the client side to database
+        app.post('/items', async (req, res) => {
+            const newItem = req.body;
+            console.log('new user come from client side', newItem);
+            const result = await itemsCollection.insertOne(newItem);
+            res.send(result);
+        });
     } finally {
         // client.close();
     }
