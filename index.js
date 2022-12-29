@@ -56,6 +56,14 @@ async function run() {
             );
             res.send(result);
         });
+
+        //API TO: Delete item from all items
+        app.delete('/item/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await itemsCollection.deleteOne(query);
+            res.send(result);
+        });
     } finally {
         // client.close();
     }
