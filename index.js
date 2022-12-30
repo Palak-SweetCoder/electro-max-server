@@ -22,8 +22,11 @@ async function run() {
     try {
         // console.log('db connected successfully!!!');
         const itemsCollection = client.db('electroMax').collection('items');
+        const myItemsCollection = client
+            .db('electroMax')
+            .collection('my-items');
 
-        // API TO: Get or Read all data from the database
+        // API TO: Get or Read all data from the from the items collection
         app.get('/items', async (req, res) => {
             const query = {};
             const cursor = itemsCollection.find(query);
@@ -65,11 +68,35 @@ async function run() {
             res.send(result);
         });
 
-        // API TO: Post new user from the client side to database
+        // API TO: Post new user from the client side to items collection
         app.post('/items', async (req, res) => {
             const newItem = req.body;
             console.log('new user come from client side', newItem);
             const result = await itemsCollection.insertOne(newItem);
+            res.send(result);
+        });
+
+        // API TO: Post new user from the client side to my-items collection
+        app.post('/my-items', async (req, res) => {
+            const newItem = req.body;
+            console.log('new user come from client side', newItem);
+            const result = await myItemsCollection.insertOne(newItem);
+            res.send(result);
+        });
+
+        // API TO: get or read all data from the my-items collection
+        app.get('/my-items', async (req, res) => {
+            const query = {};
+            const cursor = myItemsCollection.find(query);
+            const myItems = await cursor.toArray();
+            res.send(myItems);
+        });
+
+        //API TO: Delete item from all my-items
+        app.delete('/my-items/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await myItemsCollection.deleteOne(query);
             res.send(result);
         });
     } finally {
