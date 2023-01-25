@@ -6,11 +6,11 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// middleware
+// -------->middleware<--------
 app.use(cors());
 app.use(express.json());
 
-// mongodb connection
+// ---------->mongodb connection<----------
 const uri = `mongodb+srv://${process.env.USER}:${process.env.DB_PASS}@cluster0.wsix71s.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -26,7 +26,7 @@ async function run() {
             .db('electroMax')
             .collection('my-items');
 
-        // API TO: Get or Read all data from the from the items collection
+        // ------>API TO: Get or Read all data from the from the items collection<------
         app.get('/items', async (req, res) => {
             const query = {};
             const cursor = itemsCollection.find(query);
@@ -34,16 +34,16 @@ async function run() {
             res.send(items);
         });
 
-        // API TO: Get or Read specific data by id from the database
+        // -------->API TO: Get or Read specific data by id from the database<--------
         app.get('/items/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            // No need to declare cursor here. Because we're finding only one item
+            // No need to declare cursor here. Because we're finding only one specific item
             const item = await itemsCollection.findOne(query);
             res.send(item);
         });
 
-        // API TO: Update quantity
+        // ------------->API TO: Update quantity<-------------
         app.put('/items/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -60,7 +60,7 @@ async function run() {
             res.send(result);
         });
 
-        //API TO: Delete item from all items
+        //--------->API TO: Delete item from all items<---------
         app.delete('/item/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -68,7 +68,7 @@ async function run() {
             res.send(result);
         });
 
-        // API TO: Post new user from the client side to items collection
+        // --------->API TO: Post new user from the client side to items collection<---------
         app.post('/items', async (req, res) => {
             const newItem = req.body;
             console.log('new user come from client side', newItem);
@@ -76,7 +76,7 @@ async function run() {
             res.send(result);
         });
 
-        // API TO: Post new user from the client side to my-items collection
+        // --------->API TO: Post new user from the client side to my-items collection<---------
         app.post('/my-items', async (req, res) => {
             const newItem = req.body;
             console.log('new user come from client side', newItem);
@@ -84,7 +84,7 @@ async function run() {
             res.send(result);
         });
 
-        // API TO: get or read all data from the my-items collection
+        // --------->API TO: get or read all data from the my-items collection<---------
         app.get('/my-items', async (req, res) => {
             const query = {};
             const cursor = myItemsCollection.find(query);
@@ -92,7 +92,7 @@ async function run() {
             res.send(myItems);
         });
 
-        //API TO: Delete item from all my-items
+        //--------->API TO: Delete item from all my-items<---------
         app.delete('/my-items/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -105,9 +105,9 @@ async function run() {
 }
 run().catch(console.dir);
 
-// root
+// ------------->server root<-----------------
 app.get('/', (req, res) => {
-    res.send('electro max server is running');
+    res.send('electro max server is running...');
 });
 
 app.listen(port, () => {
