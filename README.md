@@ -3,7 +3,7 @@
 
 # [Hi, I'm Palak! 👋](https://github.com/palakxdev)
 
-## To see the api live: [CLICK HERE](https://electro-max-server.up.railway.app/)
+## To see the api live: [CLICK HERE](https://defiant-hosiery-duck.cyclic.app)
 
 ## PROJECT DESCRIPTION:
 
@@ -19,7 +19,7 @@ In general, I'm using here the CRUD activity (CREATE, READ, UPDATE, DELETE).
 
 ✔️ ExpressJS
 
-✔️ [railway.app](https://railway.app/) for deployment
+✔️ [cyclic.sh](https://cyclic.sh/) for deployment
 
 ## Feedback
 
